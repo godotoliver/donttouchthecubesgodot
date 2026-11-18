@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dic852frn0bom"]
+
+[ext_resource type="Script" uid="uid://mogjqbjbemb7" path="res://Scripts/rotate.gd" id="1_5rjml"]
+[ext_resource type="ArrayMesh" uid="uid://blmnuh1fevvb1" path="res://Assets/Models - PY/cookie.obj" id="2_psj1s"]
+[ext_resource type="Script" uid="uid://dweuk6xdfsf0i" path="res://Scripts/destroyer.gd" id="2_ychve"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_psj1s"]
+points = PackedVector3Array(0.05303738, 0.009513373, 0.090234645, -0.05642269, 0.019448575, -0.09220845, -0.05922226, 0.01620278, -0.08480368, -0.045911733, 0.039176963, 0.07947156, 0.06279454, 0.050588887, -0.0027171206, 0.0521113, -3.469447e-18, -0.080648854, -0.09769339, 0, 0.0007444471, -0.08846533, 0.03916189, -0.005776509, 0.09769339, 0, 0.0007444471, 0.046287045, 0.03929756, -0.07862624, -0.048846696, 0, 0.08542276, -0.013944627, 0.050588887, -0.058542073, 0.04591174, 0.039176967, 0.07947157, 0.10630403, 0.019445196, -0.005865736, -0.02091694, 0.050588887, 0.056550276, -0.048846696, 0, -0.08393387, -0.053856455, 0.019379199, 0.09499324, 0.05642269, 0.019448575, -0.09220845, -0.104866326, 0.022788972, 0.004013821, 0.048846696, 0, 0.08542276, -0.046287045, 0.03929756, -0.07862624, 0.053856455, 0.019379199, 0.09499324, 0.087740034, 0.03904107, 0.007229757, -0.045352824, 0.050588887, 0.03562787, 0.09966488, 0.019444173, 0.017355261, -0.10630403, 0.019445196, -0.005865736, 0.08846533, 0.03916189, -0.005776509, 0.04882805, 0.050588887, 0.025147544, 0.053212345, 0.012789302, -0.092377156, -0.10317104, 0.006124883, 0.0007444471, -0.08773848, 0.039040808, 0.0072296415, -0.035481166, 0.04862618, -0.044418223)
+
+[node name="Cube" type="RigidBody3D"]
+script = ExtResource("1_5rjml")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+mesh = ExtResource("2_psj1s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0.016995013, 0)
+shape = SubResource("ConvexPolygonShape3D_psj1s")
+
+[node name="Destroyer" type="Node3D" parent="."]
+script = ExtResource("2_ychve")
+time_to_destroy = 15.0

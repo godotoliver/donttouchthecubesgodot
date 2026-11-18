@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://4d6nklbfhxe3"]
+
+[ext_resource type="Script" uid="uid://ckdtb3bs58h70" path="res://Scripts/player_controls.gd" id="1_8gbba"]
+[ext_resource type="Script" uid="uid://c5p8nwxnemjg4" path="res://Scripts/spawner.gd" id="1_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://dic852frn0bom" path="res://Scenes/Objects/cube.tscn" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://cerrb2g2cbn0p" path="res://Scenes/Objects/user_interface.tscn" id="4_jjvhh"]
+[ext_resource type="Shader" uid="uid://bf5omxoswio3o" path="res://Scenes/main.gdshader" id="5_kry3j"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7u77a"]
+
+[sub_resource type="Environment" id="Environment_bo1nx"]
+background_mode = 1
+ambient_light_color = Color(0.62657535, 0.30677292, 0.46971393, 1)
+ambient_light_energy = 0.0
+fog_light_color = Color(0.75121474, 0.42017537, 0.63163084, 1)
+fog_light_energy = 5.2
+fog_density = 0.0
+fog_sky_affect = 0.26
+fog_height_density = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21xkr"]
+shader = ExtResource("5_kry3j")
+
+[node name="Main" type="Node3D" unique_id=663521655]
+
+[node name="Player" type="RigidBody3D" parent="." unique_id=722336966]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+gravity_scale = 0.5
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_8gbba")
+difficultyMultiplier = 0.05
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=786253779]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_7u77a")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=668084357]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="Spawner" type="Node3D" parent="Player" unique_id=1982362715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
+script = ExtResource("1_bo1nx")
+cube_scene = ExtResource("2_8gbba")
+
+[node name="CubeContainer" type="Node3D" parent="." unique_id=827655656]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=10634369]
+environment = SubResource("Environment_bo1nx")
+
+[node name="DirectionalLight (Left)" type="DirectionalLight3D" parent="." unique_id=69229058]
+transform = Transform3D(-4.371139e-08, 0.42261827, -0.90630776, 0, 0.90630776, 0.42261827, 1, 1.8473232e-08, -3.961597e-08, -19.060068, -26.41124, 2.9934013)
+light_energy = 0.3
+directional_shadow_split_1 = 1.0
+directional_shadow_split_2 = 1.0
+directional_shadow_split_3 = 1.0
+
+[node name="DirectionalLight (Right)" type="DirectionalLight3D" parent="." unique_id=168640126]
+transform = Transform3D(-4.371139e-08, -0.42261827, 0.90630776, 0, 0.90630776, 0.42261827, -1, 1.8473232e-08, -3.961597e-08, 19.06, -26.411, 2.993)
+light_energy = 0.3
+directional_shadow_split_1 = 1.0
+directional_shadow_split_2 = 1.0
+directional_shadow_split_3 = 1.0
+
+[node name="UI" parent="." unique_id=893406222 instance=ExtResource("4_jjvhh")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=828395348]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=332845267]
+visible = false
+material = SubResource("ShaderMaterial_21xkr")
+offset_right = 2113.0
+offset_bottom = 2196.0
+
+[connection signal="body_entered" from="Player" to="Player" method="_on_body_entered"]
